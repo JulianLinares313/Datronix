@@ -1,5 +1,5 @@
-# Usa una imagen base con Java 17
-FROM openjdk:17-jdk-slim
+# Usa una imagen base con Java 21
+FROM eclipse-temurin:21-jdk
 
 # Instala Tailscale
 RUN apt-get update && apt-get install -y curl gnupg2
@@ -8,7 +8,7 @@ RUN curl -fsSL https://tailscale.com/install.sh | sh
 # Crea el directorio para el estado de Tailscale
 RUN mkdir -p /var/lib/tailscale
 
-# Copia el archivo JAR de tu aplicación (Render lo construirá)
+# Copia el archivo JAR de tu aplicación (Render lo construirá con el Build Command)
 COPY target/*.jar app.jar
 
 # Expone el puerto de la aplicación
