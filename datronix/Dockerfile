@@ -1,9 +1,9 @@
 # Etapa 1: Compilar el proyecto con Maven y JDK 21
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY pom.xml .
+COPY datronix/pom.xml .
 RUN mvn dependency:go-offline
-COPY src ./src
+COPY datronix/src ./src
 RUN mvn package -DskipTests
 
 # Etapa 2: Imagen final con JDK 21 y Tailscale
