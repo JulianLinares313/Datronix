@@ -1,0 +1,285 @@
+/* ============================================================
+   ESTILOS DATRONIX - MENÚ PRINCIPAL
+   Basado en PrincipalGui.java (Swing) - VERSIÓN DEFINITIVA
+   ============================================================ */
+
+/* ---------- RESET Y BASE ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #F5F5F5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ---------- MENÚ LATERAL (txtMenu) ---------- */
+.sidebar {
+    width: 360px;
+    background-color: #0D47A1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    height: 100vh;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+}
+
+/* Encabezado (jLabel3 + jSeparator1) */
+.sidebar-header {
+    padding: 40px 20px 16px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-header h1 {
+    font-size: 32px;
+    font-weight: normal;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.sidebar-header .separator {
+    width: 80%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    margin: 12px auto 10px;
+}
+
+/* Botón IA (btnBuscarProducto1) */
+.btn-ia {
+    background: transparent;
+    color: #FFFFFF;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+.btn-ia:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.04);
+}
+
+/* Navegación */
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0 20px 0;
+}
+
+/* Cada botón del menú */
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    margin: 2px 0;
+    background-color: #1565C0;
+    color: #FFFFFF;
+    border: none;
+    border-left: 10px solid #0D47A1;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-radius: 0;
+    outline: none;
+}
+
+.menu-item:hover {
+    background-color: #0D47A1;
+    border-left-color: #FFD700;
+    transform: translateX(6px);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item.active {
+    background-color: #0D47A1;
+    border-left-color: #FFD700;
+    font-weight: bold;
+}
+
+.menu-item .icon {
+    font-size: 22px;
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.menu-item .label {
+    flex: 1;
+    white-space: nowrap;
+}
+
+/* Botón Salir (btnBuscarProducto) */
+.btn-salir {
+    background-color: #0D47A1;
+    color: #FFFFFF;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 20px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.btn-salir:hover {
+    background-color: #B71C1C;
+    border-left: 10px solid #FFD700;
+    transform: translateX(6px);
+}
+
+.btn-salir .icon {
+    font-size: 22px;
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+.main-content {
+    flex: 1;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.top-bar {
+    background-color: #1976D2;
+    color: #FFFFFF;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.top-bar .titulo {
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal;
+}
+
+.top-bar .fecha {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal;
+}
+
+.content-area {
+    flex: 1;
+    padding: 30px;
+    background-color: #FFFFFF;
+    overflow-y: auto;
+}
+
+.welcome-message {
+    font-size: 28px;
+    color: #000000;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.placeholder {
+    background: #f9f9f9;
+    border: 1px dashed #cccccc;
+    border-radius: 12px;
+    padding: 60px 20px;
+    text-align: center;
+    color: #666666;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#vistaContainer {
+    min-height: 300px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px;
+    }
+    .sidebar-header h1 {
+        font-size: 18px;
+    }
+    .btn-ia {
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+    .menu-item .label,
+    .btn-salir .label {
+        display: none;
+    }
+    .menu-item {
+        justify-content: center;
+        padding: 12px 0;
+        font-size: 18px;
+        border-left-width: 6px;
+    }
+    .menu-item .icon {
+        font-size: 24px;
+        width: auto;
+    }
+    .btn-salir {
+        justify-content: center;
+        padding: 12px 0;
+    }
+    .top-bar .titulo {
+        font-size: 16px;
+    }
+    .top-bar .fecha {
+        font-size: 14px;
+    }
+    .content-area {
+        padding: 16px;
+    }
+    .welcome-message {
+        font-size: 20px;
+    }
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #1976D2;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0D47A1;
+}

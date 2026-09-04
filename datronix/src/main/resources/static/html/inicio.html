@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datronix - Panel Principal</title>
+    <!-- Ruta CORREGIDA según tu indicación -->
+    <link rel="stylesheet" href="/src/main/resources/static/css/estilos.css">
+      <link rel="stylesheet" href="/src/main/resources/static/css/clientes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- MENÚ LATERAL (fijo) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Datronix</h1>
+                <div class="separator"></div>
+                <button class="btn-ia" data-vista="ia">
+                    <i class="fas fa-robot"></i> IA
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="menu-item active" data-vista="principal">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="label">Principal</span>
+                </button>
+                <button class="menu-item" data-vista="ventas">
+                    <span class="icon"><i class="fas fa-cash-register"></i></span>
+                    <span class="label">Ventas</span>
+                </button>
+                <button class="menu-item" data-vista="productos">
+                    <span class="icon"><i class="fas fa-boxes"></i></span>
+                    <span class="label">Productos</span>
+                </button>
+                <button class="menu-item" data-vista="clientes">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <span class="label">Clientes</span>
+                </button>
+                <button class="menu-item" data-vista="proveedores">
+                    <span class="icon"><i class="fas fa-truck"></i></span>
+                    <span class="label">Proveedores</span>
+                </button>
+                <button class="menu-item" data-vista="empleados">
+                    <span class="icon"><i class="fas fa-id-badge"></i></span>
+                    <span class="label">Empleados</span>
+                </button>
+                <button class="menu-item" data-vista="compras">
+                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                    <span class="label">Compras</span>
+                </button>
+                <button class="menu-item" data-vista="nomina">
+                    <span class="icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                    <span class="label">Nómina</span>
+                </button>
+                <button class="menu-item" data-vista="devoluciones">
+                    <span class="icon"><i class="fas fa-undo-alt"></i></span>
+                    <span class="label">Devoluciones</span>
+                </button>
+                <button class="menu-item" data-vista="reportes">
+                    <span class="icon"><i class="fas fa-chart-bar"></i></span>
+                    <span class="label">Reportes</span>
+                </button>
+                <button class="menu-item" data-vista="historial">
+                    <span class="icon"><i class="fas fa-history"></i></span>
+                    <span class="label">Historial</span>
+                </button>
+                <button class="menu-item" data-vista="soporte">
+                    <span class="icon"><i class="fas fa-headset"></i></span>
+                    <span class="label">Soporte</span>
+                </button>
+            </nav>
+            <button class="btn-salir" id="btnSalir">
+                <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                <span class="label">Salir</span>
+            </button>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL (donde se cargan los módulos) -->
+        <main class="main-content">
+            <header class="top-bar">
+                <span class="titulo">Administrador / Control / Reportes de ventas</span>
+                <span class="fecha" id="fechaActual">Cargando fecha...</span>
+            </header>
+            <div class="content-area" id="contenidoPrincipal">
+                <div id="vistaContainer">
+                    <!-- Aquí se inyecta el contenido del módulo -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script principal (carga módulos y gestiona navegación) -->
+    <script src="/src/main/resources/static/js/inicio.js"></script>
+</body>
+</html>

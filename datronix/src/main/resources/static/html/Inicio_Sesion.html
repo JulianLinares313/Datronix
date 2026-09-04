@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/main/resources/static/css/Inicio_Sesion.css">
+    <script src="/src/main/resources/static/js/Inicio_Sesion.js"></script>
+    <title>Inicio_Sesion</title>
+</head>
+
+<body>
+
+    <section class="contenedor">
+
+        <div>
+            <h2>Inicia sesión en tu cuenta</h2>
+            <label for="correoUsuario">Correo electronico</label>
+            <input type="text" id="correoUsuario" placeholder="Ingresa correo de usuario"><br>
+            <label for="contrasenaUsuario">Contraseña</label><br>
+            <input type="password" id="contrasenaUsuario" placeholder="Ingresa contraseña">
+
+            <button type="button" onclick="validarUsuario()">Iniciar Sesión</button>
+            <button type="button" onclick="window.location.href='Registro_Sesion.html'">¿No tienes cuenta?
+                Regístrate</button>
+        </div>
+
+
+    </section>
+
+</body>
+
+</html>

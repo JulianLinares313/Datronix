@@ -1,0 +1,119 @@
+<!-- modulos/clientes.html -->
+<div class="modulo-clientes">
+    <div class="top-bar-modulo">
+        <span class="titulo-modulo">👥 Clientes</span>
+        <div class="user-info-modulo">
+            <span>Usuario: <strong id="nombreUsuarioModulo">Cargando...</strong></span>
+        </div>
+    </div>
+
+    <div class="toolbar-clientes">
+        <div class="busqueda">
+            <input type="text" id="txtBuscarCliente" placeholder="Buscar por ID o nombre...">
+            <button class="btn btn-primary" id="btnBuscarCliente">Buscar</button>
+            <button class="btn btn-outline" id="btnActualizarCliente">↻ Actualizar</button>
+        </div>
+        <div class="acciones">
+            <button class="btn btn-primary" id="btnAgregarCliente">+ Agregar</button>
+            <button class="btn btn-primary" id="btnModificarCliente">✎ Modificar</button>
+            <button class="btn btn-danger" id="btnEliminarCliente">🗑 Eliminar</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table-datronix" id="tablaClientes">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Gmail</th>
+                    <th>Dirección</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyClientes">
+                <tr><td colspan="5" class="text-center">Cargando clientes...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modales (Agregar y Editar) -->
+<div class="modal-overlay" id="modalAgregarCliente">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Nuevo Cliente Datronix</h2>
+            <span class="modal-close" id="closeAgregarCliente">&times;</span>
+        </div>
+        <form id="formAgregarCliente">
+            <div class="form-group">
+                <label>ID DEL CLIENTE</label>
+                <input type="text" id="txtIdCliente" placeholder="Cédula / RUC" required>
+            </div>
+            <div class="form-group">
+                <label>NOMBRE DEL CLIENTE</label>
+                <input type="text" id="txtNombreCliente" placeholder="Nombre completo" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>TELEFONO DEL CLIENTE</label>
+                    <input type="number" id="txtTelefonoCliente" placeholder="Número" required>
+                </div>
+                <div class="form-group">
+                    <label>GMAIL DEL CLIENTE</label>
+                    <input type="email" id="txtGmailCliente" placeholder="correo@ejemplo.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>DIRECCION DEL CLIENTE</label>
+                <input type="text" id="txtDireccionCliente" placeholder="Dirección">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-success" id="btnGuardarCliente">💾 Guardar</button>
+                <button type="button" class="btn btn-outline" id="btnLimpiarCliente">🧹 Limpiar</button>
+                <button type="button" class="btn btn-danger" id="btnVolverCliente">⬅ Volver</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalEditarCliente">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar Cliente Datronix</h2>
+            <span class="modal-close" id="closeEditarCliente">&times;</span>
+        </div>
+        <form id="formEditarCliente">
+            <div class="form-group">
+                <label>ID DEL CLIENTE</label>
+                <input type="text" id="txtIdClienteEdit" disabled>
+            </div>
+            <div class="form-group">
+                <label>NOMBRE DEL CLIENTE</label>
+                <input type="text" id="txtNombreClienteEdit" placeholder="Nombre completo" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>TELEFONO DEL CLIENTE</label>
+                    <input type="number" id="txtTelefonoClienteEdit" placeholder="Número" required>
+                </div>
+                <div class="form-group">
+                    <label>GMAIL DEL CLIENTE</label>
+                    <input type="email" id="txtGmailClienteEdit" placeholder="correo@ejemplo.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>DIRECCION DEL CLIENTE</label>
+                <input type="text" id="txtDireccionClienteEdit" placeholder="Dirección">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-success" id="btnGuardarClienteEdit">💾 Guardar</button>
+                <button type="button" class="btn btn-outline" id="btnLimpiarClienteEdit">🧹 Limpiar</button>
+                <button type="button" class="btn btn-danger" id="btnVolverClienteEdit">⬅ Volver</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Script específico de clientes -->
+<script src="/src/main/resources/static/js/clientes.js"></script>
