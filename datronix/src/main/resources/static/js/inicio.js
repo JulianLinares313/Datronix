@@ -1,11 +1,11 @@
-// js/inicio.js - Versión para Spring Boot (rutas simples)
+// js/inicio.js - Versión definitiva con rutas absolutas
 
 const menuItems = document.querySelectorAll('.menu-item');
 const btnSalir = document.getElementById('btnSalir');
 const fechaSpan = document.getElementById('fechaActual');
 const vistaContainer = document.getElementById('vistaContainer');
 
-// ============ RUTAS DE MÓDULOS (SIMPLE PARA SPRING BOOT) ============
+// ============ RUTAS DE MÓDULOS (ABSOLUTAS) ============
 const modulos = {
     principal: { titulo: '📊 Panel de Control', archivo: '/modulos/principal.html' },
     ventas: { titulo: '💰 Módulo de Ventas', archivo: '/modulos/ventas.html' },
@@ -22,14 +22,12 @@ const modulos = {
     ia: { titulo: '🤖 Asistente IA', archivo: '/modulos/ia.html' }
 };
 
-// ============ ACTUALIZAR FECHA ============
 function actualizarFecha() {
     const ahora = new Date();
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     fechaSpan.textContent = 'Hoy es ' + ahora.toLocaleDateString('es-ES', opciones);
 }
 
-// ============ CARGAR VISTA ============
 async function cargarVista(vistaId) {
     const modulo = modulos[vistaId];
     if (!modulo) {
@@ -49,17 +47,37 @@ async function cargarVista(vistaId) {
 
         console.log(`✅ Módulo ${vistaId} cargado. Esperando inicialización...`);
 
-        // Para clientes, forzar un reintento después de 500ms
-        if (vistaId === 'clientes') {
-            setTimeout(() => {
-                if (typeof window.inicializarClientes === 'function') {
-                    console.log('✅ Forzando inicialización desde inicio.js');
-                    window.inicializarClientes();
-                } else {
-                    console.warn('⚠️ window.inicializarClientes no está definida');
+        // Inicializar módulo específico si tiene función global
+        const initFnName = `inicializar${vistaId.charAt(0).toUpperCase() + vistaId.slice(1)}`;
+        // Esperar un poco para que el script del módulo se cargue
+        setTimeout(() => {
+            if (typeof window[initFnName] === 'function') {
+                console.log(`✅ Ejecutando ${initFnName}() desde inicio.js`);
+                window[initFnName]();
+            } else {
+                console.warn(`⚠️ ${initFnName} no está definida.`);
+                // Si no se definió, quizás el script no se cargó, intentamos cargarlo manualmente (solo para clientes)
+                if (vistaId === 'clientes') {
+                    console.log('⏳ Intentando cargar clientes.js manualmente...');
+                    const script = document.createElement('script');
+                    script.type = 'module';
+                    script.src = '/js/clientes.js';
+                    script.onload = () => {
+                        console.log('✅ clientes.js cargado manualmente');
+                        // Tras cargar, intentar ejecutar la inicialización
+                        setTimeout(() => {
+                            if (typeof window.inicializarClientes === 'function') {
+                                window.inicializarClientes();
+                            } else {
+                                console.error('❌ window.inicializarClientes sigue sin definirse');
+                            }
+                        }, 200);
+                    };
+                    script.onerror = () => console.error('❌ Error al cargar clientes.js manualmente');
+                    document.head.appendChild(script);
                 }
-            }, 600);
-        }
+            }
+        }, 500);
 
     } catch (error) {
         vistaContainer.innerHTML = `<div class="placeholder"><p>Error al cargar la vista: ${error.message}</p></div>`;
@@ -67,7 +85,7 @@ async function cargarVista(vistaId) {
     }
 }
 
-// ============ EVENTOS DEL MENÚ ============
+// Eventos del menú
 menuItems.forEach(btn => {
     btn.addEventListener('click', function () {
         cargarVista(this.dataset.vista);
@@ -84,12 +102,11 @@ btnSalir.addEventListener('click', function () {
     }
 });
 
-// ============ INICIALIZACIÓN ============
+// Inicialización
 document.addEventListener('DOMContentLoaded', function () {
     actualizarFecha();
     cargarVista('principal');
 });
 
-// Exponer funciones globalmente
 window.cargarVista = cargarVista;
 window.actualizarFecha = actualizarFecha;
