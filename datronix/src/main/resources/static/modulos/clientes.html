@@ -115,5 +115,14 @@
     </div>
 </div>
 
-<!-- Script específico de clientes -->
-<script src="/src/main/resources/static/js/clientes.js"></script>
+<!-- Script específico -->
+<script type="module" src="/js/clientes.js"></script>
+
+<!-- Script de verificación (para saber si el módulo se cargó) -->
+<script>
+    console.log('✅ clientes.html inyectado en el DOM');
+    // Verificar si el script del módulo se cargó
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ DOM de clientes.html completamente cargado');
+    });
+</script>

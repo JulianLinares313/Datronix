@@ -1,33 +1,35 @@
-// js/inicio.js
+// js/inicio.js - Versión para Spring Boot (rutas simples)
 
 const menuItems = document.querySelectorAll('.menu-item');
 const btnSalir = document.getElementById('btnSalir');
 const fechaSpan = document.getElementById('fechaActual');
 const vistaContainer = document.getElementById('vistaContainer');
 
-// Definición de módulos y sus archivos HTML
+// ============ RUTAS DE MÓDULOS (SIMPLE PARA SPRING BOOT) ============
 const modulos = {
-    principal: { titulo: '📊 Panel de Control', archivo: '/src/main/resources/static/modulos/principal.html' },
-    ventas: { titulo: '💰 Módulo de Ventas', archivo: '/src/main/resources/static/modulos/ventas.html' },
-    productos: { titulo: '📦 Gestión de Productos', archivo: '/src/main/resources/static/modulos/productos.html' },
-    clientes: { titulo: '👥 Gestión de Clientes', archivo: '/src/main/resources/static/modulos/clientes.html' },
-    proveedores: { titulo: '🏢 Gestión de Proveedores', archivo: '/src/main/resources/static/modulos/proveedores.html' },
-    empleados: { titulo: '👔 Gestión de Empleados', archivo: '/src/main/resources/static/modulos/empleados.html' },
-    compras: { titulo: '🛒 Gestión de Compras', archivo: '/src/main/resources/static/modulos/compras.html' },
-    nomina: { titulo: '📄 Nómina', archivo: '/src/main/resources/static/modulos/nomina.html' },
-    devoluciones: { titulo: '↩️ Devoluciones', archivo: '/src/main/resources/static/modulos/devoluciones.html' },
-    reportes: { titulo: '📈 Reportes y Estadísticas', archivo: '/src/main/resources/static/modulos/reportes.html' },
-    historial: { titulo: '📋 Historial de Ventas', archivo: '/src/main/resources/static/modulos/historial.html' },
-    soporte: { titulo: '🛠️ Soporte', archivo: '/src/main/resources/static/modulos/soporte.html' },
-    ia: { titulo: '🤖 Asistente IA', archivo: '/src/main/resources/static/modulos/ia.html' }
+    principal: { titulo: '📊 Panel de Control', archivo: '/modulos/principal.html' },
+    ventas: { titulo: '💰 Módulo de Ventas', archivo: '/modulos/ventas.html' },
+    productos: { titulo: '📦 Gestión de Productos', archivo: '/modulos/productos.html' },
+    clientes: { titulo: '👥 Gestión de Clientes', archivo: '/modulos/clientes.html' },
+    proveedores: { titulo: '🏢 Gestión de Proveedores', archivo: '/modulos/proveedores.html' },
+    empleados: { titulo: '👔 Gestión de Empleados', archivo: '/modulos/empleados.html' },
+    compras: { titulo: '🛒 Gestión de Compras', archivo: '/modulos/compras.html' },
+    nomina: { titulo: '📄 Nómina', archivo: '/modulos/nomina.html' },
+    devoluciones: { titulo: '↩️ Devoluciones', archivo: '/modulos/devoluciones.html' },
+    reportes: { titulo: '📈 Reportes y Estadísticas', archivo: '/modulos/reportes.html' },
+    historial: { titulo: '📋 Historial de Ventas', archivo: '/modulos/historial.html' },
+    soporte: { titulo: '🛠️ Soporte', archivo: '/modulos/soporte.html' },
+    ia: { titulo: '🤖 Asistente IA', archivo: '/modulos/ia.html' }
 };
 
+// ============ ACTUALIZAR FECHA ============
 function actualizarFecha() {
     const ahora = new Date();
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     fechaSpan.textContent = 'Hoy es ' + ahora.toLocaleDateString('es-ES', opciones);
 }
 
+// ============ CARGAR VISTA ============
 async function cargarVista(vistaId) {
     const modulo = modulos[vistaId];
     if (!modulo) {
@@ -45,17 +47,27 @@ async function cargarVista(vistaId) {
         const menuBtn = document.querySelector(`.menu-item[data-vista="${vistaId}"]`);
         if (menuBtn) menuBtn.classList.add('active');
 
-        // Inicializar el módulo si tiene función de inicialización
-        const initFn = window[`inicializar${vistaId.charAt(0).toUpperCase() + vistaId.slice(1)}`];
-        if (typeof initFn === 'function') {
-            initFn();
+        console.log(`✅ Módulo ${vistaId} cargado. Esperando inicialización...`);
+
+        // Para clientes, forzar un reintento después de 500ms
+        if (vistaId === 'clientes') {
+            setTimeout(() => {
+                if (typeof window.inicializarClientes === 'function') {
+                    console.log('✅ Forzando inicialización desde inicio.js');
+                    window.inicializarClientes();
+                } else {
+                    console.warn('⚠️ window.inicializarClientes no está definida');
+                }
+            }, 600);
         }
+
     } catch (error) {
         vistaContainer.innerHTML = `<div class="placeholder"><p>Error al cargar la vista: ${error.message}</p></div>`;
+        console.error('❌ Error cargando vista:', error);
     }
 }
 
-// Eventos del menú
+// ============ EVENTOS DEL MENÚ ============
 menuItems.forEach(btn => {
     btn.addEventListener('click', function () {
         cargarVista(this.dataset.vista);
@@ -72,11 +84,12 @@ btnSalir.addEventListener('click', function () {
     }
 });
 
-// Inicialización
+// ============ INICIALIZACIÓN ============
 document.addEventListener('DOMContentLoaded', function () {
     actualizarFecha();
     cargarVista('principal');
 });
 
+// Exponer funciones globalmente
 window.cargarVista = cargarVista;
 window.actualizarFecha = actualizarFecha;

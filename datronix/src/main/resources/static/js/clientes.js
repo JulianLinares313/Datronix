@@ -1,33 +1,43 @@
-// js/clientes.js
+// js/clientes.js - CRUD completo conectado al backend (versión depurada)
+
 import { getData, postData, putData, deleteData } from './api.js';
 
 let clientesData = [];
+let clienteEditando = null;
+
+console.log('✅ clientes.js cargado');
 
 // ============ INICIALIZACIÓN ============
 function inicializarClientes() {
+    console.log('✅ inicializarClientes ejecutado');
     cargarClientes();
     configurarEventosClientes();
-    // Mostrar nombre del usuario (si está en localStorage)
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     const nombreModulo = document.getElementById('nombreUsuarioModulo');
     if (nombreModulo) nombreModulo.textContent = usuario.nombreUsuario || 'Usuario';
 }
 
-// ============ CARGAR CLIENTES DESDE EL BACKEND ============
+// ============ CARGAR CLIENTES ============
 async function cargarClientes() {
+    console.log('✅ cargarClientes ejecutado');
     try {
         clientesData = await getData('/clientes');
+        console.log('✅ Datos recibidos:', clientesData);
         renderizarTabla(clientesData);
     } catch (error) {
-        console.error('Error al cargar clientes:', error);
+        console.error('❌ Error al cargar clientes:', error);
         document.getElementById('tbodyClientes').innerHTML = 
-            `<tr><td colspan="5" class="text-center">Error al cargar datos: ${error.message}</td></tr>`;
+            `<tr><td colspan="5" class="text-center" style="color:red;">Error: ${error.message}</td></tr>`;
     }
 }
 
 // ============ RENDERIZAR TABLA ============
 function renderizarTabla(data) {
     const tbody = document.getElementById('tbodyClientes');
+    if (!tbody) {
+        console.error('❌ No se encontró el elemento tbodyClientes');
+        return;
+    }
     if (!data || data.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay clientes registrados</td></tr>`;
         return;
@@ -80,6 +90,7 @@ function abrirModalEditar() {
         alert('Cliente no encontrado');
         return;
     }
+    clienteEditando = cliente;
     document.getElementById('txtIdClienteEdit').value = cliente.idCliente;
     document.getElementById('txtNombreClienteEdit').value = cliente.nombreCliente;
     document.getElementById('txtTelefonoClienteEdit').value = cliente.telefonoCliente;
@@ -90,9 +101,10 @@ function abrirModalEditar() {
 
 function cerrarModalEditar() {
     document.getElementById('modalEditarCliente').classList.remove('active');
+    clienteEditando = null;
 }
 
-// ============ CRUD CON BACKEND ============
+// ============ CRUD ============
 async function guardarCliente() {
     const id = document.getElementById('txtIdCliente').value.trim();
     const nombre = document.getElementById('txtNombreCliente').value.trim();
@@ -114,8 +126,9 @@ async function guardarCliente() {
     };
 
     try {
-        await postData('/clientes', nuevoCliente);
-        await cargarClientes(); // Recargar tabla
+        const creado = await postData('/clientes', nuevoCliente);
+        clientesData.push(creado);
+        renderizarTabla(clientesData);
         cerrarModalAgregar();
         alert('✅ Cliente guardado exitosamente');
     } catch (error) {
@@ -145,7 +158,11 @@ async function guardarClienteEdit() {
 
     try {
         await putData(`/clientes/${id}`, clienteActualizado);
-        await cargarClientes();
+        const index = clientesData.findIndex(c => c.idCliente === id);
+        if (index !== -1) {
+            clientesData[index] = clienteActualizado;
+        }
+        renderizarTabla(clientesData);
         cerrarModalEditar();
         alert('✅ Cliente actualizado');
     } catch (error) {
@@ -164,7 +181,8 @@ async function eliminarCliente() {
 
     try {
         await deleteData(`/clientes/${id}`);
-        await cargarClientes();
+        clientesData = clientesData.filter(c => c.idCliente !== id);
+        renderizarTabla(clientesData);
         alert('🗑 Cliente eliminado');
     } catch (error) {
         alert('❌ Error al eliminar: ' + error.message);
@@ -190,33 +208,60 @@ function limpiarFormularioEditar() {
 
 // ============ CONFIGURAR EVENTOS ============
 function configurarEventosClientes() {
+    console.log('✅ configurarEventosClientes ejecutado');
     // Buscar
-    document.getElementById('btnBuscarCliente').addEventListener('click', buscarClientes);
-    document.getElementById('txtBuscarCliente').addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') buscarClientes();
-    });
+    const btnBuscar = document.getElementById('btnBuscarCliente');
+    if (btnBuscar) {
+        btnBuscar.addEventListener('click', buscarClientes);
+        console.log('✅ Evento buscar asignado');
+    } else {
+        console.error('❌ btnBuscarCliente no encontrado');
+    }
+
+    const txtBuscar = document.getElementById('txtBuscarCliente');
+    if (txtBuscar) {
+        txtBuscar.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') buscarClientes();
+        });
+        console.log('✅ Evento keyup asignado');
+    } else {
+        console.error('❌ txtBuscarCliente no encontrado');
+    }
 
     // Actualizar
-    document.getElementById('btnActualizarCliente').addEventListener('click', cargarClientes);
+    const btnActualizar = document.getElementById('btnActualizarCliente');
+    if (btnActualizar) {
+        btnActualizar.addEventListener('click', cargarClientes);
+        console.log('✅ Evento actualizar asignado');
+    } else {
+        console.error('❌ btnActualizarCliente no encontrado');
+    }
 
     // Agregar
-    document.getElementById('btnAgregarCliente').addEventListener('click', abrirModalAgregar);
-    document.getElementById('closeAgregarCliente').addEventListener('click', cerrarModalAgregar);
-    document.getElementById('btnVolverCliente').addEventListener('click', cerrarModalAgregar);
-    document.getElementById('btnGuardarCliente').addEventListener('click', guardarCliente);
-    document.getElementById('btnLimpiarCliente').addEventListener('click', limpiarFormularioAgregar);
+    const btnAgregar = document.getElementById('btnAgregarCliente');
+    if (btnAgregar) {
+        btnAgregar.addEventListener('click', abrirModalAgregar);
+        console.log('✅ Evento agregar asignado');
+    } else {
+        console.error('❌ btnAgregarCliente no encontrado');
+    }
+
+    document.getElementById('closeAgregarCliente')?.addEventListener('click', cerrarModalAgregar);
+    document.getElementById('btnVolverCliente')?.addEventListener('click', cerrarModalAgregar);
+    document.getElementById('btnGuardarCliente')?.addEventListener('click', guardarCliente);
+    document.getElementById('btnLimpiarCliente')?.addEventListener('click', limpiarFormularioAgregar);
 
     // Editar
-    document.getElementById('btnModificarCliente').addEventListener('click', abrirModalEditar);
-    document.getElementById('closeEditarCliente').addEventListener('click', cerrarModalEditar);
-    document.getElementById('btnVolverClienteEdit').addEventListener('click', cerrarModalEditar);
-    document.getElementById('btnGuardarClienteEdit').addEventListener('click', guardarClienteEdit);
-    document.getElementById('btnLimpiarClienteEdit').addEventListener('click', limpiarFormularioEditar);
+    document.getElementById('btnModificarCliente')?.addEventListener('click', abrirModalEditar);
+    document.getElementById('closeEditarCliente')?.addEventListener('click', cerrarModalEditar);
+    document.getElementById('btnVolverClienteEdit')?.addEventListener('click', cerrarModalEditar);
+    document.getElementById('btnGuardarClienteEdit')?.addEventListener('click', guardarClienteEdit);
+    document.getElementById('btnLimpiarClienteEdit')?.addEventListener('click', limpiarFormularioEditar);
 
     // Eliminar
-    document.getElementById('btnEliminarCliente').addEventListener('click', eliminarCliente);
+    document.getElementById('btnEliminarCliente')?.addEventListener('click', eliminarCliente);
 
-    // Selección de fila en la tabla (delegación de eventos)
+    // Selección de fila
     document.addEventListener('click', function(e) {
         const tr = e.target.closest('#tablaClientes tbody tr');
         if (tr) {
@@ -226,5 +271,24 @@ function configurarEventosClientes() {
     });
 }
 
-// Exponer la función de inicialización
-window.inicializarClientes = inicializarClientes;
+// ============ AUTO-INICIALIZACIÓN MEJORADA ============
+function autoIniciar() {
+    console.log('🔄 autoIniciar ejecutado');
+    if (document.getElementById('tbodyClientes')) {
+        console.log('✅ tbodyClientes encontrado, iniciando...');
+        inicializarClientes();
+    } else {
+        console.log('⏳ tbodyClientes no encontrado, reintentando en 500ms...');
+        setTimeout(autoIniciar, 500);
+    }
+}
+
+// Ejecutar inmediatamente si el DOM ya está cargado
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    autoIniciar();
+} else {
+    document.addEventListener('DOMContentLoaded', autoIniciar);
+}
+
+// También forzar después de 1 segundo por si el módulo se inyecta dinámicamente
+setTimeout(autoIniciar, 1000);
