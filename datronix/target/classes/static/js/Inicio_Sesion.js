@@ -16,7 +16,7 @@ function validarUsuario() {
     };
 
     // Enviar datos al backend mediante POST
-    fetch('http://localhost:8080/api/usuarios/login', {
+    fetch('/api/usuarios/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
