@@ -1,8 +1,7 @@
 // js/api.js - Comunicación con el backend de Spring Boot
 
 // URL base de tu backend (cambia si está en otro puerto)
-const API_BASE = 'http://localhost:8080/api';
-
+const API_BASE = window.location.origin + '/api';
 // Función para obtener headers (con autenticación si la tienes)
 function getHeaders() {
     const token = localStorage.getItem('token');
