@@ -1,73 +1,150 @@
-body{
-    background: linear-gradient(135deg, rgb(147, 4, 4), rgb(5, 5, 170));
-    font-family: 'Times New Roman', Times, serif  ;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+/* RESET Y FONDO CIBERNÉTICO */
+body {
+    background: radial-gradient(circle at center, #1e2d5f 0%, #030712 100%);
+    font-family: 'Rajdhani', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100vw;
-    margin: 0%;
-
+    margin: 0;
+    overflow: hidden;
 }
 
-
+/* CONTENEDOR TIPO NÚCLEO ROBÓTICO */
 .contenedor {
-    background: linear-gradient(135deg, rgb(180, 4, 4), rgb(68, 68, 182));
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    width: 320px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    border: none;
-    box-shadow: 2px 4px 4px 0.2px black;    
-    gap: 20px;
-}
-
-.contenedor:hover{
-    background-color: rgba(75, 75, 218, 0.103);
-}
-button{
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin: 10px 5px;
-    border: none;
-    background: linear-gradient(135deg, red, blue);
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    width: 100%;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-button:hover{
-    transform: scale(1.1);
-    border-style: solid;
-    border-color: darkgoldenrod;
-}
-
-input{
-    border: solid;
-    border-color: rgb(255, 229, 165);
-    border-radius: 10px;
-    background-color: #ffd6cf91;
-    height: 25px;
-    width: 230px;
-}
-
-input:hover{
-    background-color: #e3dff51f;
-}
-
-
-
-label:hover{
-    color: rgb(250, 232, 195);
-}
-
-label{
-    font-size:20px;
+    background: rgba(9, 35, 119, 0.75);
+    backdrop-filter: blur(12px);
     color: #ffffff;
+    padding: 40px 35px;
+    border-radius: 16px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    /* Sombra con aura de neón azul robot */
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+/* EFECTO DE ELEVACIÓN Y ENERGIZADO EN EL CONTENEDOR */
+.contenedor:hover {
+    transform: translateY(-8px);
+    border-color: #00f0ff;
+    box-shadow: 0 0 35px rgba(0, 240, 255, 0.35), inset 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+/* TÍTULO CON FUENTE ROBÓTICA Y EFECTO GLOW (BRILLO) */
+.contenedor h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.4);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* ETIQUETAS ESTILO INTERFAZ DIGITAL */
+label {
+    display: block;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #7dd3fc;
+    margin-bottom: 8px;
+    text-align: left;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+label:hover {
+    color: #00f0ff;
+    text-shadow: 0 0 8px #00f0ff;
+}
+
+/* INPUTS CON ESTILO MÓDULO DE ENTRADA */
+input {
+    border: 1px solid #1e293b;
+    border-left: 3px solid #00f0ff; /* Borde frontal cian */
+    border-radius: 6px;
+    background-color: rgba(3, 7, 18, 0.8);
+    color: #00f0ff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    height: 42px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+    margin-bottom: 22px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:hover {
+    border-color: #38bdf8;
+    background-color: rgba(15, 23, 42, 0.9);
+}
+
+input:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    background-color: rgba(15, 23, 42, 1);
+    color: #ffffff;
+}
+
+/* BOTONES TIPO ACTIVADOR CIBERNÉTICO */
+button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 8px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* BOTÓN PRINCIPAL (INICIAR SESIÓN) */
+button[onclick*="validarUsuario"] {
+    background: linear-gradient(135deg, #0055ff, #00f0ff);
+    color: #000000; /* Texto oscuro para máximo contraste */
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+button[onclick*="validarUsuario"]:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+    filter: brightness(1.2);
+}
+
+/* BOTÓN SECUNDARIO (REGISTRO) */
+button[onclick*="Registro_Sesion"] {
+    background: transparent;
+    color: #00f0ff;
+    border: 1px solid #00f0ff;
+    margin-top: 14px;
+}
+
+button[onclick*="Registro_Sesion"]:hover {
+    background: rgba(0, 240, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    text-shadow: 0 0 8px #00f0ff;
+}
+
+button:active {
+    transform: translateY(-1px);
 }
